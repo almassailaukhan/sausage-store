@@ -41,5 +41,16 @@ pipeline {
                 archiveArtifacts(artifacts: 'frontend/dist/frontend/*')
             }
         }
+
+	stage('Notify Telegram') {
+            steps {
+               sh '''
+               curl -X POST -H 'Content-type: application/json' \
+               --data '{"chat_id": "439902278", "text": "Almas Sailaukhan собрал приложение ✅"}' \
+               https://api.telegram.org/bot8327046113:AAHiB88gBX_LrH0kbVHZOG0EIhE-5LuxzJw/sendMessage
+               '''
+            }
+        }
+
     }
 } 
