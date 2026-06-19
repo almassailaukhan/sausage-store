@@ -34,6 +34,13 @@ pipeline {
                 }
             }
         }
+        stage('Test Telegram') {
+            steps {
+                sh 'curl -v https://api.telegram.org
+                }
+            }
+        }
+
         
         stage('Save artifacts') {
             steps {
