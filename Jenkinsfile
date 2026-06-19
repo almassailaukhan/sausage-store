@@ -37,7 +37,7 @@ pipeline {
         stage('Test Telegram') {
             steps {
                 sh '''
-                curl -4 -v https://api.telegram.org
+                curl -4 -x http://192.168.188.103:3128 -v https://api.telegram.org
                 '''
             }
         }
