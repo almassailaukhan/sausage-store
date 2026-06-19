@@ -37,7 +37,7 @@ pipeline {
         stage('Test Telegram') {
             steps {
                 sh '''
-                curl -v https://api.telegram.org
+                curl-4 -v https://api.telegram.org
                 '''
             }
         }
@@ -53,14 +53,14 @@ pipeline {
     post {
         success {
             sh '''
-            curl --max-time 10 -s -X POST -H "Content-type: application/json" \
+            curl -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
             --data '{"chat_id": "439902278", "text": "✅ Build SUCCESS"}' \
             https://api.telegram.org/botTOKEN/sendMessage || true
             '''
         }
         failure {
             sh '''
-            curl --max-time 10 -s -X POST -H "Content-type: application/json" \
+            curl -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
             --data '{"chat_id": "439902278", "text": "❌ Build FAILED"}' \
             https://api.telegram.org/botTOKEN/sendMessage || true
             '''
