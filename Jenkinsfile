@@ -40,17 +40,26 @@ pipeline {
                 archiveArtifacts(artifacts: 'backend/target/sausage-store-0.0.1-SNAPSHOT.jar')
                 archiveArtifacts(artifacts: 'frontend/dist/frontend/*')
             }
+
+	    post {
+                success {
+                   sh '''
+                   curl -X POST -H 'Content-type: application/json' \
+                   --data '{"chat_id": "439902278", "text": "✅ Build SUCCESS"}' \
+                   https://api.telegram.org/bot8327046113:AAHiB88gBX_LrH0kbVHZOG0EIhE-5LuxzJw/sendMessage
+                   '''
+                }
+                failure {
+                   sh '''
+                   curl -X POST -H 'Content-type: application/json' \
+                   --data '{"chat_id": "439902278", "text": "❌ Build FAILED"}' \
+                   https://api.telegram.org/bot8327046113:AAHiB88gBX_LrH0kbVHZOG0EIhE-5LuxzJw/sendMessage
+                   '''
+                }
+            }
+
         }
 
-	stage('Notify Telegram') {
-            steps {
-               sh '''
-               curl -X POST -H 'Content-type: application/json' \
-               --data '{"chat_id": "439902278", "text": "Almas Sailaukhan собрал приложение ✅"}' \
-               https://api.telegram.org/bot8327046113:AAHiB88gBX_LrH0kbVHZOG0EIhE-5LuxzJw/sendMessage
-               '''
-            }
-        }
 
     }
 } 
