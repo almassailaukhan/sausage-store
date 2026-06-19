@@ -34,13 +34,6 @@ pipeline {
             }
         }
 
-        stage('Test Telegram') {
-            steps {
-                sh '''
-                curl -4 -x http://192.168.188.103:3128 -v https://api.telegram.org
-                '''
-            }
-        }
 
         stage('Save artifacts') {
             steps {
@@ -53,14 +46,14 @@ pipeline {
     post {
         success {
             sh '''
-            curl -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
+            curl -x http://192.168.188.103:3128 -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
             --data '{"chat_id": "439902278", "text": "✅ Build SUCCESS"}' \
             https://api.telegram.org/botTOKEN/sendMessage || true
             '''
         }
         failure {
             sh '''
-            curl -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
+            curl -x http://192.168.188.103:3128 -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
             --data '{"chat_id": "439902278", "text": "❌ Build FAILED"}' \
             https://api.telegram.org/botTOKEN/sendMessage || true
             '''
