@@ -48,14 +48,14 @@ pipeline {
             sh '''
             curl -x http://192.168.188.103:3128 -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
             --data '{"chat_id": "439902278", "text": "✅ Build SUCCESS"}' \
-            https://api.telegram.org/botTOKEN/sendMessage || true
+            https://api.telegram.org/bot8327046113:AAHiB88gBX_LrH0kbVHZOG0EIhE-5LuxzJw/sendMessage || true
             '''
         }
         failure {
             sh '''
             curl -x http://192.168.188.103:3128 -4 --max-time 10 -s -X POST -H "Content-type: application/json" \
             --data '{"chat_id": "439902278", "text": "❌ Build FAILED"}' \
-            https://api.telegram.org/botTOKEN/sendMessage || true
+            https://api.telegram.org/bot8327046113:AAHiB88gBX_LrH0kbVHZOG0EIhE-5LuxzJw/sendMessage || true
             '''
         }
     }
